@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogue
+  namespace: roboshop
+  labels:
+    app: catalogue
+    tier: app
+    project: roboshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalogue
+      tier: app
+      project: roboshop
+  template:
+    metadata:
+      namespace: roboshop
+      labels:
+        app: catalogue
+        tier: app
+        project: roboshop
+    spec:
+      containers:
+      - name: catalogue
+        image: gspvsr/catalogue:1.0.0
+
+
