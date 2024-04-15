@@ -119,7 +119,7 @@ spec:
       volumes:
         - name: nginx-conf
           configMap:
-            name: nginxd
+            name: nginx
             items:
             - key: nginx.conf 
               path: nginx.conf
