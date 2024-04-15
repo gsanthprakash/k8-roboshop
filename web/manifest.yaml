@@ -4,7 +4,7 @@ metadata:
   name: nginx
   namespace: roboshop
 data:
- ngin.conf: |
+ nginx.conf: |
   user www-data;
   worker_processes 4;
   pid /var/run/nginx.pid;
@@ -119,7 +119,7 @@ spec:
       volumes:
         - name: nginx-conf
           configMap:
-            name: nginx
+            name: nginxd
             items:
             - key: nginx.conf 
               path: nginx.conf
