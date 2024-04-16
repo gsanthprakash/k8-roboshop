@@ -1,56 +1,59 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user
+  name: payment
   namespace: roboshop
   labels:
-    app: user
-    tier: app
+    app: payment
+    tier: db
     project: roboshop
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user
-      tier: app
+      app: payment
+      tier: db
       project: roboshop
   template:
     metadata:
       namespace: roboshop
       labels:
-        app: user
-        tier: app
+        app: payment
+        tier: db
         project: roboshop
     spec:
       containers:
-      - name: user
-        image: gspvsr/user:1.0.0
-        envFrom:
+      - name: payment
+        image: gspvsr/payment:1.0.0
+        envFrom: 
         - configMapRef:
-            name: user
+            name: payment
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: user
-  namespace: roboshop
+  name: payment
 spec:
   selector:
-    app: user
-    tier: app
+    app: payment
+    tier: db
     project: roboshop
   ports:
   - name: mongodb-port
     protocol: TCP
-    port: 5672
-    targetPort: 5672
+    port: 8080
+    targetPort: 8080
 ---
-apiVersion: v1
+apiVersion: v1 
 kind: ConfigMap
 metadata:
-  name: user
+  name: payment
   namespace: roboshop
-data:
-  MONGO: "true"
-  MONGO_URL: "mongodb://mongodb:27017/user"
-  REDIS_HOST: "redis"
+data: 
+  CART_HOST: "cart"
+  CART_PORT: "8080"
+  USER_HOST: "user"
+  USER_PORT: "8080"
+  AMQP_HOST: "rabbitmq"
+  
+
